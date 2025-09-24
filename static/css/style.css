@@ -1,0 +1,12 @@
+/* This file is intentionally left blank. */
+
+#main_canvas {
+    /* width: 800px; */
+    /* height: 800px; */
+    /* border: 2px; */
+    background-color: white;
+}
+
+#canvas_bounder {
+    padding: 2%;
+}

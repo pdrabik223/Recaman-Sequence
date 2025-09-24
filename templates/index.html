@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+    <h1>Welcome to the Flask App</h1>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <form>
+        <fieldset role="group">
+            <input type="number" placeholder="80" />
+            <input type="submit" value="Generate" onclick="" />
+        </fieldset>
+    </form>
+    <div id="canvas_bounder">
+        <canvas id="main_canvas"></canvas>
+    </div>
+</body>
+
+</html>
