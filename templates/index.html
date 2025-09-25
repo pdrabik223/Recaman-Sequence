@@ -1,26 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask App</title>
+    <title>Recamán's sequence</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
 </head>
 
 <body>
-    <h1>Welcome to the Flask App</h1>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <form>
-        <fieldset role="group">
-            <input type="number" placeholder="80" />
-            <input type="submit" value="Generate" onclick="" />
-        </fieldset>
+    <h1>Welcome to Recamán's sequence App</h1>
+    <p> The goal was to create visualization generator</p>
+
+    <script>
+        function toggle_visibility(id) {
+            element = document.getElementById(id)
+            current = element.style.display
+            if (current == "none") element.style.display = "block"
+            else element.style.display = "none"
+        }
+
+        async function getData() {
+            const url = "./svg_file";
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        "sequence_length": document.getElementById("sequence_length").value,
+                        "image_size": document.getElementById("image_size").value,
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+                // Assume the response is an SVG image (or other image type)
+                const resp = await response.text();
+
+                // const imgUrl = URL.createObjectURL(blob);
+                console.log("test" + resp + "test")
+
+                const img = document.getElementById("image");
+                img.src = "{{ url_for('static', filename='" + resp + "') }}";
+                // img.style.display = "block";
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+    </script>
+    <form id="main_form">
+
+        <label for="sequence_length">sequence_length</label>
+        <input type="number" value="80" id="sequence_length" />
+
+        <label for="image_size">image_size</label>
+        <input type="number" value="500" id="image_size" />
+
+        <label for="line_width">line_width</label>
+        <input type="number" value="0.001" id="line_width" />
+
+        <label for="use_rainbow_color">use_rainbow_color</label>
+        <input type="checkbox" role="switch" id="use_rainbow_color"
+            onclick="toggle_visibility('line_color_single');toggle_visibility('rainbow_color')" />
+
+        <div id="line_color_single">
+            <input type="color" value="#aa0e0e" id="line_color" />
+        </div>
+
+        <div id="rainbow_color" style="display: none;">
+            <p> add rainbow color stuff </p>
+
+            <label for="saturation">saturation</label>
+            <input type="number" value="1" id="saturation" />
+
+            <label for="brightness">brightness</label>
+            <input type="number" value="1" id="brightness" />
+
+            <label for="alpha">alpha</label>
+            <input type="number" value="1" id="alpha" />
+        </div>
+
+
+        <label for="line_color">line_color</label>
+
+        <input type="checkbox" role="switch" onclick="toggle_visibility('background_color_input')" />
+
+        <label for="background_color">background_color</label>
+
+        <div id="background_color_input" style="display: none;">
+            <input type="color" value="#0eaaaa" id="background_color" />
+        </div>
+
+
+        <label for="rotate_visualization">rotate_visualization</label>
+        <input type="checkbox" role="switch" id="rotate_visualization" />
+
+        <label for="padding">padding</label>
+        <input type="number" value="0.001" id="padding" />
+
+
     </form>
-    <div id="canvas_bounder">
-        <canvas id="main_canvas"></canvas>
-    </div>
+    <Button onclick="getData()">"Generate"</button>
+
+    <img id="image" alt="Example">
+
+    <button>Download SVG</button>
 </body>
 
 </html>
