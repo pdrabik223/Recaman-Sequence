@@ -2,9 +2,9 @@ import cairo
 import math
 from typing import Optional
 
-from color import Color
-from rainbow import RainbowConfigModel, rainbow
-from recmans_sequence import naive_approach
+from backend.color import Color
+from backend.rainbow import RainbowConfigModel, rainbow
+from backend.recmans_sequence import naive_approach
 
 
 def add_circle(
@@ -53,9 +53,9 @@ def generate_series_visualization(
     background_color: Optional[Color] = None,
     rotate_drawing_by_45_deg: bool = True,
     padding: float = 0.05,
-    file_name: Optional[str] = "recman_circles",
-):
-    file_name += ".csv"
+    file_name: Optional[str] = "recman_circles.svg",
+) -> str:
+    # file_name += ".csv"
     with cairo.SVGSurface(file_name, image_size, image_size) as surface:
 
         context = cairo.Context(surface)
@@ -102,6 +102,7 @@ def generate_series_visualization(
                 angle_drawing=rotate_drawing_by_45_deg,
                 color=color,
             )
+    return file_name
 
 
 # get basically random one

@@ -1,6 +1,6 @@
 import math
-from color import Color
-from normalized_float import assert_normal
+from .color import Color
+from .normalized_float import assert_normal
 
 
 class RainbowConfigModel:
