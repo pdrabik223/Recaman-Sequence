@@ -22,7 +22,7 @@
             else element.style.display = "none"
         }
 
-        async function getData() {
+        async function getData(download = false) {
             const url = "./svg_file_download";
             try {
                 const response = await fetch(url, {
@@ -40,6 +40,7 @@
                         "saturation": parseFloat(document.getElementById("saturation").value),
                         "brightness": parseFloat(document.getElementById("brightness").value),
                         "alpha": parseFloat(document.getElementById("alpha").value),
+                        
                     }),
                     headers: {
                         "Content-type": "application/json; charset=UTF-8"
@@ -50,8 +51,19 @@
                 }
                 const resp = await response.blob();
                 const imgUrl = URL.createObjectURL(resp);
-                const img = document.getElementById("image");
-                img.src = imgUrl;
+                if (download) {
+                    console.log(download)
+                    browser.downloads.download({
+                        url: imgUrl,
+                        filename: "my-image-again.png",
+                        conflictAction: "uniquify",
+                    });
+                } else {
+                    const img = document.getElementById("image");
+                    img.src = imgUrl;
+                    const img_download = document.getElementById("image_download");
+                    img_download.href = imgUrl;
+                }
             } catch (error) {
                 console.error(error.message);
             }
@@ -92,7 +104,8 @@
 
         <label for="line_color">line_color</label>
 
-        <input id="use_background_color" type="checkbox" role="switch" onclick="toggle_visibility('background_color_input')" />
+        <input id="use_background_color" type="checkbox" role="switch"
+            onclick="toggle_visibility('background_color_input')" />
 
         <label for="background_color">background_color</label>
 
@@ -109,11 +122,11 @@
 
 
     </form>
-    <Button onclick="getData()">"Generate"</button>
+    <Button onclick="getData()">Generate</button>
 
     <img id="image" href="{{url_for('svg_file_download')}}" alt="Example">
-    <a href="{{url_for('svg_file_download')}}"> download</a>
-    <button>Download SVG</button>
+    <a id="image_download" href="path_to_file" download="RecamanSequence.svg">Download</a>
+    <!-- <button onclick="getData(true)">Download SVG</button> -->
 </body>
 
 </html>
