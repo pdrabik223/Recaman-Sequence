@@ -18,4 +18,5 @@ class Color:
 
         value = value.lstrip("#")
         values = tuple(int(value[i : i + 2], 16) for i in (0, 2, 4))
-        return Color(*values, 1)
+
+        return Color(values[0] / 255, values[1] / 255, values[2] / 255, 1)

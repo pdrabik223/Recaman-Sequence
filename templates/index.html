@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
 </head>
 
-<body>
+<body onload="getData()">
     <h1>Welcome to Recamán's sequence App</h1>
     <p> The goal was to create visualization generator</p>
 
     <script>
+
         function toggle_visibility(id) {
             element = document.getElementById(id)
             current = element.style.display
