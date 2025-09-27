@@ -1,106 +1,64 @@
-// This file is intentionally left blank.
+function toggle_visibility(id) {
+    element = document.getElementById(id)
+    current = element.style.display
+    if (current == "none") element.style.display = "block"
+    else element.style.display = "none"
+}
 
-const numbers = [
-    0,
-    1,
-    3,
-    6,
-    2,
-    7,
-    13,
-    20,
-    12,
-    21,
-    11,
-    22,
-    10,
-    23,
-    9,
-    24,
-    8,
-    25,
-    43,
-    62,
-    42,
-    63,
-    41,
-    18,
-    42,
-    17,
-    43,
-    16,
-    44,
-    15,
-    45,
-    14,
-    46,
-    79,
-    113,
-    78,
-    114,
-    77,
-    39,
-    78,
-    38,
-    79,
-    37,
-    80,
-    36,
-    81,
-    35,
-    82,
-    34,
-    83,
-    33,
-    84,
-    32,
-    85,
-    31,
-    86,
-    30,
-    87,
-    29,
-    88,
-    28,
-    89,
-    27,
-    90,
-    26,
-    91,
-    157,
-    224,
-    156,
-    225,
-    155
-]
+async function getData() {
+    const url = "./svg_file_download";
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                "sequence_length": parseInt(document.getElementById("sequence_length").value),
+                "image_size": parseInt(document.getElementById("image_size").value),
+                "line_width": parseFloat(document.getElementById("line_width").value),
+                "use_rainbow_color": document.getElementById("use_rainbow_color").checked,
+                "line_color": document.getElementById("line_color").value,
+                "background_color": document.getElementById("background_color").value,
+                "padding": parseFloat(document.getElementById("padding").value),
+                "rotate_visualization": document.getElementById("rotate_visualization").checked,
+                "use_background_color": document.getElementById("use_background_color").checked,
+                "saturation": parseFloat(document.getElementById("saturation").value),
+                "brightness": parseFloat(document.getElementById("brightness").value),
+                "alpha": parseFloat(document.getElementById("alpha").value),
 
-window.addEventListener("load", (event) => {
-    generate_drawing("80");
-});
- 
-function generate_drawing(number_of_iterations) {
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        const resp = await response.blob();
+        const imgUrl = URL.createObjectURL(resp);
 
-    var no_iterations = parseInt(number_of_iterations);
+        const img = document.getElementById("image");
+        img.src = imgUrl;
+        const img_download = document.getElementById("image_download");
+        img_download.href = imgUrl;
+        document.getElementById("result").style.display = "block"
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 
-    const boundary = document.getElementById("canvas_bounder");
-    const canvas = document.getElementById("main_canvas");
+function switchTheme() {
 
-    const { width, height } = boundary.getBoundingClientRect();
+    const targetTheme = document.getElementById("webPage").getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
 
-    canvas.style.width = width
-    canvas.style.height = height
+    if (targetTheme === "dark") {
+        document.getElementById("light_mode_icon").style.display = "block"
+        document.getElementById("dark_mode_icon").style.display = "none"
 
-    const ctx = canvas.getContext("2d");
+    } else {
+        document.getElementById("light_mode_icon").style.display = "none"
+        document.getElementById("dark_mode_icon").style.display = "block"
+    }
 
-    ctx.beginPath();
-    ctx.moveTo(0, height);
-    ctx.lineTo(width, 0);
-    ctx.lineWidth = 1;
-    ctx.lineCap = "round";
-    ctx.stroke();
+    document.getElementById("webPage").setAttribute('data-theme', targetTheme);
 
-    ctx.beginPath();
-    ctx.arc(95, 45, 80, 0.0, 0.5 * Math.PI, true);
-    //X POS; Y POS; RADIUS;     
-    ctx.stroke();
+    localStorage.setItem('theme', targetTheme);
 }
