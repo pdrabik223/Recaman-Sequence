@@ -33,18 +33,5 @@ Goal of the application
    http://localhost
    ```
 
-<!-- ## docker 
-
-1. build 
-```
-docker build . -t "pd_website:v0.0.1"
-```
-
-2. run 
-```
-docker run pd_website:v0.0.1
-``` -->
-
-
 ## Sources
 https://scipython.com/blog/recamans-sequence/
