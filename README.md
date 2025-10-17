@@ -1,9 +1,8 @@
 # Recamán's sequence 
 
-Goal of the application 
-1. Create ever running server for the Recamán's sequence calculator
-2. Server should calculate next numbers and post solutions to maybe discord app??
-3.Server should host js app with visualization of the algorithm solutions based on svg image generator running in backend   
+I just wanted to generate pretty images
+
+<img src="static/assets/recman_circles.svg" alt="Image dark" width="200"/>
 
 ## Installation
 

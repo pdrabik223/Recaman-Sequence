@@ -1,12 +1,27 @@
-/* This file is intentionally left blank. */
-
-#main_canvas {
-    /* width: 800px; */
-    /* height: 800px; */
-    /* border: 2px; */
-    background-color: white;
+#body {
+    max-width: 1600px;
+    min-width: 800px;
+    margin: auto;
+    padding: 4%;
 }
 
-#canvas_bounder {
-    padding: 2%;
+#result {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#image {
+    border-radius: 12px;
+    border: 4px solid grey;
+}
+
+#light_mode_icon:hover {
+    cursor: pointer;
+
+}
+
+#dark_mode_icon:hover {
+    cursor: pointer;
+
 }

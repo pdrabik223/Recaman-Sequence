@@ -1,2 +1,3 @@
 .venv
 res.json
+__pycache__
